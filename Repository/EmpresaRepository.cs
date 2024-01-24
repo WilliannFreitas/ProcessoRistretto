@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ProcessoRistretto.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProcessoRistretto.Models;
 
 namespace ProcessoRistretto.Repository
 {
@@ -55,7 +55,6 @@ namespace ProcessoRistretto.Repository
             {
                 using (var context = db)
                 {
-
                     var teste = context.Empresas.ToList();
 
                     if (empresa.IdEmpresa > 0)
