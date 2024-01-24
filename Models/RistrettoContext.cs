@@ -14,7 +14,6 @@ namespace ProcessoRistretto.Models
             .AddJsonFile("appsettings.json")
             .Build();
 
-        // Correção: O parâmetro deve ser DbContextOptions<RistrettoContext>
         public RistrettoContext(DbContextOptions<RistrettoContext> options) : base(options)
         {
 
