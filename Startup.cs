@@ -8,6 +8,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 using ProcessoRistretto.Models;
 using ProcessoRistretto.Repository;
+using ProcessoRistretto.Repository.Interface;
 
 namespace ProcessoRistretto
 {
