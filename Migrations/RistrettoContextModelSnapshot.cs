@@ -52,9 +52,17 @@ namespace ProcessoRistretto.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Cargo")
+                        .HasColumnName("CARGO")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnName("DT_NASCIMENTO")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnName("EMAIL")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .HasColumnName("LOGIN")
@@ -64,16 +72,16 @@ namespace ProcessoRistretto.Migrations
                         .HasColumnName("NOME")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Senha")
+                    b.Property<string>("Senha")
                         .HasColumnName("SENHA")
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sobrenome")
                         .HasColumnName("SOBRENOME")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnName("STATUS")
+                    b.Property<bool>("StatusFuncionario")
+                        .HasColumnName("STATUS_FUNCIONARIO")
                         .HasColumnType("bit");
 
                     b.HasKey("IdFuncionario");

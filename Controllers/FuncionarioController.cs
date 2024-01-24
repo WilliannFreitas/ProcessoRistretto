@@ -53,6 +53,9 @@ namespace ProcessoRistretto.Controllers
             if (funcionario.DataNascimento < DateTime.Now.AddYears(-115))
                 campos += " Data de Nascimento";
 
+            if (funcionario.StatusFuncionario == null)
+                campos += " Status Funcionario";
+
             if (!string.IsNullOrWhiteSpace(campos))
                 return StatusCode((int)HttpStatusCode.NotAcceptable, $"O(s) campos(s){campos} são de preenchimento obrigatório!");
 

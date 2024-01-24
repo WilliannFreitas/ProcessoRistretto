@@ -30,10 +30,12 @@ namespace ProcessoRistretto.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NOME = table.Column<string>(nullable: true),
                     SOBRENOME = table.Column<string>(nullable: true),
+                    EMAIL = table.Column<string>(nullable: true),
+                    CARGO = table.Column<string>(nullable: true),
                     LOGIN = table.Column<string>(nullable: true),
-                    SENHA = table.Column<long>(nullable: false),
+                    SENHA = table.Column<string>(nullable: true),
                     DT_NASCIMENTO = table.Column<DateTime>(nullable: false),
-                    STATUS = table.Column<bool>(nullable: false)
+                    STATUS_FUNCIONARIO = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

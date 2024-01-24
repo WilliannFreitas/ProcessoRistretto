@@ -9,7 +9,6 @@ namespace ProcessoRistretto.Models
     public class Funcionario
     {
         [Key]
-        [SwaggerIgnore]
         [Column("ID_FUNCIONARIO")]
         public Int64 IdFuncionario { get; set; }
 

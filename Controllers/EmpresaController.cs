@@ -6,7 +6,6 @@ using System.Net;
 
 namespace ProcessoRistretto.Controllers
 {
-    //[Authorize]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class EmpresaController : ControllerBase

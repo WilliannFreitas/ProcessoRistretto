@@ -23,7 +23,7 @@ namespace ProcessoRistretto.Repository
                 db.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
@@ -37,7 +37,7 @@ namespace ProcessoRistretto.Repository
                 db.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
@@ -49,8 +49,8 @@ namespace ProcessoRistretto.Repository
             {
                 Empresa empresa = new Empresa()
                 {
-                    IdEmpresa = (long)empresaParam.IdEmpresa,
-                    DddTelefone = (long)empresaParam.DddTelefone,
+                    IdEmpresa = empresaParam.IdEmpresa == null ? 0 : (long)empresaParam.IdEmpresa,
+                    DddTelefone = empresaParam.DddTelefone == null ? 0 : (long)empresaParam.DddTelefone,
                     NomeEmpresarial = empresaParam.NomeEmpresarial,
                     Url = empresaParam.Url  
                 };

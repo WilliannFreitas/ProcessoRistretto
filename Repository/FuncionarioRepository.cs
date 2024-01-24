@@ -23,7 +23,7 @@ namespace ProcessoRistretto.Repository
                 return true;
             }
             catch
-            {
+            { 
                 return false;
             }
         }
