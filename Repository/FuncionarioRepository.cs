@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ProcessoRistretto.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProcessoRistretto.Models;
 
 namespace ProcessoRistretto.Repository
 {
@@ -21,6 +21,7 @@ namespace ProcessoRistretto.Repository
         {
             db = _db;
         }
+
         public bool Inserir(Funcionario funcionario)
         {
             try
@@ -48,12 +49,8 @@ namespace ProcessoRistretto.Repository
                 return false;
             }
         }
-        /// <summary>
-        /// Método para consultar no Banco de dados.
-        /// </summary>
-        /// <param name="funcionario"></param>
-        /// <param name="EAlteracao"></param>
-        /// <returns></returns>
+
+
         public List<Funcionario> Consultar(Funcionario funcionario, bool EAlteracao = false)
         {
             try
@@ -65,6 +62,7 @@ namespace ProcessoRistretto.Repository
 
                     if (funcionario.IdFuncionario > 0)
                         teste = teste.Where(banco => banco.IdFuncionario == funcionario.IdFuncionario).ToList();
+
                     if (!EAlteracao)
                     {
                         if (!String.IsNullOrWhiteSpace(funcionario.Nome))
@@ -76,11 +74,20 @@ namespace ProcessoRistretto.Repository
                         if (!String.IsNullOrWhiteSpace(funcionario.Login))
                             teste = teste.Where(banco => banco.Login.ToUpper().Contains(funcionario.Login.ToUpper())).ToList();
 
-                        if (funcionario.Senha > 0)
+                        if (funcionario.Senha.Length > 6 && funcionario.Senha.Length < 12)
                             teste = teste.Where(banco => banco.Senha == funcionario.Senha).ToList();
 
-                        if (funcionario.Status)
-                            teste = teste.Where(banco => banco.Status == funcionario.Status).ToList();
+                        if (!String.IsNullOrWhiteSpace(funcionario.Email))
+                            teste = teste.Where(banco => banco.Email.ToUpper().Contains(funcionario.Email.ToUpper())).ToList();
+
+                        if (!String.IsNullOrWhiteSpace(funcionario.Cargo))
+                            teste = teste.Where(banco => banco.Cargo.ToUpper().Contains(funcionario.Cargo.ToUpper())).ToList();
+
+                        if (funcionario.DataNascimento < DateTime.Now.AddYears(-115))
+                            teste = teste.Where(banco => banco.DataNascimento == funcionario.DataNascimento).ToList();
+
+                        teste = teste.Where(banco => banco.StatusFuncionario == funcionario.StatusFuncionario).ToList();
+
                     }
 
                     return teste;

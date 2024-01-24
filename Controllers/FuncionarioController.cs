@@ -8,18 +8,18 @@ using System.Net;
 using System.Threading.Tasks;
 using ProcessoRistretto.Models;
 using ProcessoRistretto.Repository;
+using Microsoft.Graph;
+using NSwag.Annotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProcessoRistretto.Controllers
-// Este código contém um passo a passo litertal para melhor entendimento de sua construção.
-//API's de consulta e inclusão do banco de dados via Link.
 {
-    //[Authorize]
     [ApiController]
     [Route("api/[controller]/[action]")]
 
     public class FuncionarioController : ControllerBase
     {
-
         private readonly FuncionarioRepository repos;
 
         public FuncionarioController(FuncionarioRepository _repos)
@@ -27,15 +27,9 @@ namespace ProcessoRistretto.Controllers
             repos = _repos;
         }
 
-        /// <summary>
-        /// Método de consulta da API.
-        /// </summary>
-        /// <param name="funcionario">objeto usuário</param>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult ConsultarFuncionario([FromQuery] Funcionario funcionario)
         {
-            //setando no try e catch a variavel que recebe a consulta no banco de dados
             try
             {
                 var funcionario_db = repos.Consultar(funcionario);
@@ -47,51 +41,40 @@ namespace ProcessoRistretto.Controllers
             }
 
         }
-        //Método de inclusão de usuário da API.
+
         [HttpPost]
-        public IActionResult InserirAlterarFuncionario(FuncionarioParam Param)
+        public IActionResult InserirAlterarFuncionario(Funcionario funcionario)
         {
-            // filtros de validação de preenchimento de campos de pesquisa.
+
             string campos = string.Empty;
-            if (string.IsNullOrWhiteSpace(Param.Nome))
+            if (string.IsNullOrWhiteSpace(funcionario.Nome))
                 campos += " Nome,";
-            if (string.IsNullOrWhiteSpace(Param.Sobrenome))
+            if (string.IsNullOrWhiteSpace(funcionario.Sobrenome))
                 campos += " Sobrenome,";
-            if (string.IsNullOrWhiteSpace(Param.Login))
+            if (string.IsNullOrWhiteSpace(funcionario.Login))
                 campos += " Login,";
-            if (Param.DataNascimento < DateTime.Now.AddYears(-100))
+            if (string.IsNullOrWhiteSpace(funcionario.Email))
+                campos += " Email,";
+            if (string.IsNullOrWhiteSpace(funcionario.Cargo))
+                campos += " Cargo,";
+            if (string.IsNullOrWhiteSpace(funcionario.Senha) && funcionario.Senha.Length > 6 && funcionario.Senha.Length < 12)
+                campos += " Senha entre 6 e 12 Digitos,";
+            if (funcionario.DataNascimento < DateTime.Now.AddYears(-115))
                 campos += " Data de Nascimento";
 
             if (!string.IsNullOrWhiteSpace(campos))
                 return StatusCode((int)HttpStatusCode.NotAcceptable, $"O(s) campos(s){campos} são de preenchimento obrigatório!");
-            //-------------------------------------------------------------
 
             try
             {
-                //atribuindo os valores de param para dentro do novo funcionario instanciado.
-                Funcionario funcionario = new Funcionario();
-                funcionario.Nome = Param.Nome;
-                funcionario.Sobrenome = Param.Sobrenome;
-                funcionario.Login = Param.Login;
-                funcionario.Senha = Param.Senha;
-                funcionario.Status = Param.Status;
-                funcionario.DataNascimento = Param.DataNascimento;
+                if (funcionario.IdFuncionario <= 0)
+                    repos.Inserir(funcionario);
+                else
+                {
+                    funcionario.IdFuncionario = funcionario.IdFuncionario;
+                    repos.Alterar(funcionario);
+                }
 
-                //atrinbuindo novo funcionario. 
-                //if (Param.IdFuncionario <= 0)
-                //{
-                //    funcionario.DataInclusao = DateTime.Now;
-                //    repos.Inserir(funcionario);
-                //}
-                //atrinbuindo alterações em um funcionario existente.
-                //else
-                //{
-                //    funcionario.DataAlteracao = DateTime.Now;
-                //    funcionario.IdFuncionario = Param.IdFuncionario;
-                //    repos.Alterar(funcionario);
-                //}
-
-                //retornando funcionario instanciado acima.
                 return Ok(funcionario);
             }
             catch (Exception ex)
