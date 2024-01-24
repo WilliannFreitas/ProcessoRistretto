@@ -7,8 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using ProcessoRistretto.Models;
-using ProcessoRistretto.Repository;
 using Microsoft.Graph;
+using ProcessoRistretto.Repository.Interface;
 
 namespace ProcessoRistretto.Controllers
 {
@@ -17,7 +17,7 @@ namespace ProcessoRistretto.Controllers
     [Route("api/[controller]/[action]")]
     public class EmpresaController : ControllerBase
     {
-                private readonly IEmpresaRepository repos;
+        private readonly IEmpresaRepository repos;
 
         public EmpresaController(IEmpresaRepository _repos)
         {
@@ -50,14 +50,14 @@ namespace ProcessoRistretto.Controllers
                 campos += " URL,";
             if (empresa.DddTelefone < 10)
                 campos += " DDD e Telefone,";
-        
+
             if (!string.IsNullOrWhiteSpace(campos))
                 return StatusCode((int)HttpStatusCode.NotAcceptable, $"O(s) campos(s) {campos} obrigatórios, prescisam ser preenchidos corretamente!");
-            
+
             try
             {
                 if (empresa.IdEmpresa <= 0)
-                    repos.Inserir(empresa);       
+                    repos.Inserir(empresa);
                 else
                 {
                     empresa.IdEmpresa = empresa.IdEmpresa;

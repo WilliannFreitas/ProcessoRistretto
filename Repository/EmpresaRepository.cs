@@ -1,18 +1,12 @@
 ﻿using ProcessoRistretto.Models;
+using ProcessoRistretto.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ProcessoRistretto.Repository
 {
-    public interface IEmpresaRepository
-    {
-        public bool Inserir(Empresa param);
-        public bool Alterar(Empresa param);
 
-        public List<Empresa> Consultar(Empresa empresa, bool EAlteracao = false);
-
-    }
     public class EmpresaRepository : IEmpresaRepository
     {
         private readonly RistrettoContext db;
@@ -49,10 +43,19 @@ namespace ProcessoRistretto.Repository
             }
         }
 
-        public List<Empresa> Consultar(Empresa empresa, bool EAlteracao = false)
+        public List<Empresa> Consultar(EmpresaParam empresaParam, bool EAlteracao = false)
         {
             try
             {
+                Empresa empresa = new Empresa()
+                {
+                    IdEmpresa = (long)empresaParam.IdEmpresa,
+                    DddTelefone = (long)empresaParam.DddTelefone,
+                    NomeEmpresarial = empresaParam.NomeEmpresarial,
+                    Url = empresaParam.Url  
+                };
+
+
                 using (var context = db)
                 {
                     var teste = context.Empresas.ToList();

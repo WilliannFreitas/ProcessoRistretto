@@ -27,4 +27,11 @@ namespace ProcessoRistretto.Models
 
     }
 
+    public class EmpresaParam
+    {
+        public Int64? IdEmpresa { get; set; }
+        public string NomeEmpresarial { get; set; }
+        public long? DddTelefone { get; set; }
+        public string Url { get; set; }
+    }
 }
