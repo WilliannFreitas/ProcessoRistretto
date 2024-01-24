@@ -1,17 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProcessoRistretto.Models;
 using ProcessoRistretto.Repository;
-using Microsoft.Graph;
-using NSwag.Annotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Net;
 
 namespace ProcessoRistretto.Controllers
 {
@@ -28,7 +19,7 @@ namespace ProcessoRistretto.Controllers
         }
 
         [HttpGet]
-        public IActionResult ConsultarFuncionario([FromQuery] Funcionario funcionario)
+        public IActionResult ConsultarFuncionario([FromQuery] FuncionarioParam funcionario)
         {
             try
             {
