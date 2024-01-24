@@ -5,14 +5,6 @@ using System.Linq;
 
 namespace ProcessoRistretto.Repository
 {
-    public interface IFuncionarioRepository
-    {
-        public bool Inserir(Funcionario param);
-        public bool Alterar(Funcionario param);
-
-        public List<Funcionario> Consultar(Funcionario funcionario, bool EAlteracao = false);
-
-    }
     public class FuncionarioRepository : IFuncionarioRepository
     {
         private readonly RistrettoContext db;
@@ -51,10 +43,24 @@ namespace ProcessoRistretto.Repository
         }
 
 
-        public List<Funcionario> Consultar(Funcionario funcionario, bool EAlteracao = false)
+        public List<Funcionario> Consultar(FuncionarioParam funcionarioParam, bool EAlteracao = false)
         {
             try
             {
+
+                Funcionario funcionario = new Funcionario()
+                {
+                    IdFuncionario = (long)funcionarioParam.IdFuncionario,
+                    Cargo = funcionarioParam.Cargo,
+                    DataNascimento = (DateTime)funcionarioParam.DataNascimento,
+                    Email = funcionarioParam.Email,
+                    Login = funcionarioParam.Login,
+                    Nome = funcionarioParam.Nome,
+                    Senha = funcionarioParam.Senha,
+                    Sobrenome = funcionarioParam.Sobrenome,
+                    StatusFuncionario = (bool)funcionarioParam.StatusFuncionario
+                };
+
                 using (var context = db)
                 {
 

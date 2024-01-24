@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProcessoRistretto.Models
 {
-    [Table(name:"FUNCIONARIO")]
+    [Table(name: "FUNCIONARIO")]
     public class Funcionario
     {
         [Key]
@@ -41,4 +41,16 @@ namespace ProcessoRistretto.Models
 
     }
 
+    public class FuncionarioParam
+    {
+        public Int64? IdFuncionario { get; set; }
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
+        public string Email { get; set; }
+        public string Cargo { get; set; }
+        public string Login { get; set; }
+        public string Senha { get; set; }
+        public DateTime? DataNascimento { get; set; }
+        public bool? StatusFuncionario { get; set; }
+    }
 }
